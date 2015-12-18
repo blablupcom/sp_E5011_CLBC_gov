@@ -9,9 +9,10 @@ import urllib2
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-#### FUNCTIONS 1.0
+#### FUNCTIONS 1.2
 
-import requests
+import requests    # import requests to validate urls
+
 def validateFilename(filename):
     filenameregex = '^[a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9]+_[0-9][0-9][0-9][0-9]_[0-9QY][0-9]$'
     dateregex = '[0-9][0-9][0-9][0-9]_[0-9QY][0-9]'
@@ -68,6 +69,8 @@ def validateURL(url):
 
         if sourceFilename:
             ext = os.path.splitext(sourceFilename)[1].replace('"', '').replace(';', '').replace(' ', '')
+        elif r.headers.get('Content-Type') == 'application/octet-stream':
+        ext = '.bin'
         else:
             ext = os.path.splitext(url)[1]
         validURL = r.status_code == 200
@@ -158,10 +161,6 @@ for yrPage in yrPages:
                     fileUrl = fileUrl
                 title = fileLink.contents[0].strip().upper()
                 if 'CSV' in title:
-                    # print title
-                    # html3 = urllib2.urlopen(fileUrl)
-                    # soup3 = BeautifulSoup(html3, 'lxml')
-                    # fileUrl = 'http://www.camden.gov.uk'+soup3.find('article').find_all('a')[-1]['href']
                     title = title.replace('\n','')
                     title = title.replace('                    ','')
                     csvYr = title.split(' ')[1]
