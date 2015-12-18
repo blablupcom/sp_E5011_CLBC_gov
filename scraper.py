@@ -70,7 +70,7 @@ def validateURL(url):
         if sourceFilename:
             ext = os.path.splitext(sourceFilename)[1].replace('"', '').replace(';', '').replace(' ', '')
         elif r.headers.get('Content-Type') == 'application/octet-stream':
-        ext = '.bin'
+            ext = '.bin'
         else:
             ext = os.path.splitext(url)[1]
         validURL = r.status_code == 200
