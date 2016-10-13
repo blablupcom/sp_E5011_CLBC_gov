@@ -106,7 +106,7 @@ yrPages = olist.findAll('li')
 for yrPage in yrPages:
 
     yrLink = yrPage.a['href']
-    if 'page=1' in yrLink:
+    if 'page=1' in yrLink or 'Open Data' in yrPage.a.text:
         pass
     else:
         yrUrl = baseUrl + yrLink
